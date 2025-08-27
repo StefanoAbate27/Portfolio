@@ -27,7 +27,9 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const linkClass =
@@ -65,23 +67,59 @@ export default function Header() {
         }`}
       >
         <nav className="bg-white/90 backdrop-blur-md rounded-full shadow-lg px-4 sm:px-6 py-3 border border-slate-200 flex items-center justify-between w-[90vw] sm:w-auto">
-          {/* Menú escritorio */}
           <ul className="hidden md:flex items-center gap-6">
-            {["inicio", "proyectos", "skills", "contacto"].map((section) => (
-              <li key={section}>
-                <Link
-                  to={section}
-                  smooth={true}
-                  duration={700}
-                  offset={-80}
-                  spy={true}
-                  activeClass={activeClass}
-                  className={`${linkClass} text-slate-700 hover:text-blue-500`}
-                >
-                  {texts[language][section]}
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link
+                to="inicio"
+                smooth={true}
+                duration={700}
+                offset={-80}
+                spy={true}
+                activeClass={activeClass}
+                className={`${linkClass} text-slate-800 hover:text-blue-500`}
+              >
+                {texts[language].inicio}
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="proyectos"
+                smooth={true}
+                duration={700}
+                offset={-80}
+                spy={true}
+                activeClass={activeClass}
+                className={`${linkClass} text-slate-700 hover:text-blue-500`}
+              >
+                {texts[language].proyectos}
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="skills"
+                smooth={true}
+                duration={700}
+                offset={-80}
+                spy={true}
+                activeClass={activeClass}
+                className={`${linkClass} text-slate-700 hover:text-blue-500`}
+              >
+                {texts[language].skills}
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="contacto"
+                smooth={true}
+                duration={700}
+                offset={-80}
+                spy={true}
+                activeClass={activeClass}
+                className={`${linkClass} text-slate-700 hover:text-blue-500`}
+              >
+                {texts[language].contacto}
+              </Link>
+            </li>
             <li>
               <a
                 href="/cv.pdf"
@@ -92,52 +130,7 @@ export default function Header() {
             </li>
           </ul>
 
-          {/* Botón menú hamburguesa (solo móviles) */}
-          <button
-            className="md:hidden ml-3"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </nav>
-
-        {/* Menú móvil con slide desde la derecha */}
-        <div
-          className={`fixed top-0 right-0 h-full w-64 bg-white/95 backdrop-blur-md shadow-lg border-l border-slate-200 p-6 flex flex-col gap-6 transform transition-transform duration-300 z-50
-            ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
-        >
-          {/* Nombre */}
-          <div className="text-lg font-bold text-slate-900 mb-4">
-            Stefano Abate
-          </div>
-
-          {/* Links */}
-          {["inicio", "proyectos", "skills", "contacto"].map((section) => (
-            <Link
-              key={section}
-              to={section}
-              smooth={true}
-              duration={700}
-              offset={-80}
-              spy={true}
-              activeClass={activeClass}
-              onClick={() => setMenuOpen(false)}
-              className={`${linkClass} text-slate-700 hover:text-blue-500`}
-            >
-              {texts[language][section]}
-            </Link>
-          ))}
-
-          {/* CV */}
-          <a
-            href="/cv.pdf"
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium shadow-md transition-all"
-          >
-            {texts[language].descargarCV}
-          </a>
-
-          {/* Idiomas */}
-          <div className="flex items-center gap-3 mt-4">
+          <div className="flex items-center gap-3 ml-3">
             <img
               src={spainFlag}
               alt="Español"
@@ -161,7 +154,75 @@ export default function Header() {
               } transition-opacity cursor-pointer`}
             />
           </div>
-        </div>
+
+
+          <button
+            className="md:hidden ml-3"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </nav>
+
+
+        {menuOpen && (
+          <div className="md:hidden mt-3 bg-white/95 backdrop-blur-md shadow-lg rounded-lg border border-slate-200 p-4 flex flex-col items-center gap-4">
+            <Link
+              to="inicio"
+              smooth={true}
+              duration={700}
+              offset={-80}
+              spy={true}
+              activeClass={activeClass}
+              onClick={() => setMenuOpen(false)}
+              className={`${linkClass} text-slate-800 hover:text-blue-500`}
+            >
+              {texts[language].inicio}
+            </Link>
+            <Link
+              to="proyectos"
+              smooth={true}
+              duration={700}
+              offset={-80}
+              spy={true}
+              activeClass={activeClass}
+              onClick={() => setMenuOpen(false)}
+              className={`${linkClass} text-slate-700 hover:text-blue-500`}
+            >
+              {texts[language].proyectos}
+            </Link>
+            <Link
+              to="skills"
+              smooth={true}
+              duration={700}
+              offset={-80}
+              spy={true}
+              activeClass={activeClass}
+              onClick={() => setMenuOpen(false)}
+              className={`${linkClass} text-slate-700 hover:text-blue-500`}
+            >
+              {texts[language].skills}
+            </Link>
+            <Link
+              to="contacto"
+              smooth={true}
+              duration={700}
+              offset={-80}
+              spy={true}
+              activeClass={activeClass}
+              onClick={() => setMenuOpen(false)}
+              className={`${linkClass} text-slate-700 hover:text-blue-500`}
+            >
+              {texts[language].contacto}
+            </Link>
+            <a
+              href="/cv.pdf"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium shadow-md transition-all"
+            >
+              {texts[language].descargarCV}
+            </a>
+          </div>
+        )}
       </header>
     </div>
   );
