@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-scroll";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "../context/LanguageContext";
 
 import spainFlag from "../assets/spain.png";
@@ -67,7 +68,6 @@ export default function Header() {
         }`}
       >
         <nav className="bg-white/90 backdrop-blur-md rounded-full shadow-lg px-4 sm:px-6 py-3 border border-slate-200 flex items-center justify-between w-[90vw] sm:w-auto">
-          
           {/*  Menú Desktop */}
           <ul className="hidden md:flex items-center gap-6">
             <li>
@@ -157,107 +157,134 @@ export default function Header() {
           </ul>
 
           {/* Botón Hamburguesa en móviles */}
-          <button
-            className="md:hidden ml-3"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          <button className="md:hidden ml-3" onClick={() => setMenuOpen(true)}>
+            <Menu size={24} />
           </button>
         </nav>
 
-        {/* Menú desplegable en móviles */}
-        {menuOpen && (
-          <div className="md:hidden mt-3 bg-white/95 backdrop-blur-md shadow-lg rounded-lg border border-slate-200 p-4 flex flex-col items-center gap-4">
-            <Link
-              to="inicio"
-              smooth={true}
-              duration={700}
-              offset={-80}
-              spy={true}
-              activeClass={activeClass}
-              onClick={() => setMenuOpen(false)}
-              className={`${linkClass} text-slate-800 hover:text-blue-500`}
-            >
-              {texts[language].inicio}
-            </Link>
-            <Link
-              to="proyectos"
-              smooth={true}
-              duration={700}
-              offset={-80}
-              spy={true}
-              activeClass={activeClass}
-              onClick={() => setMenuOpen(false)}
-              className={`${linkClass} text-slate-700 hover:text-blue-500`}
-            >
-              {texts[language].proyectos}
-            </Link>
-            <Link
-              to="skills"
-              smooth={true}
-              duration={700}
-              offset={-80}
-              spy={true}
-              activeClass={activeClass}
-              onClick={() => setMenuOpen(false)}
-              className={`${linkClass} text-slate-700 hover:text-blue-500`}
-            >
-              {texts[language].skills}
-            </Link>
-            <Link
-              to="contacto"
-              smooth={true}
-              duration={700}
-              offset={-80}
-              spy={true}
-              activeClass={activeClass}
-              onClick={() => setMenuOpen(false)}
-              className={`${linkClass} text-slate-700 hover:text-blue-500`}
-            >
-              {texts[language].contacto}
-            </Link>
-
-            <a
-              href="/cv.pdf"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium shadow-md transition-all"
-              onClick={() => setMenuOpen(false)}
-            >
-              {texts[language].descargarCV}
-            </a>
-
-            {/* ✅ Idiomas dentro del menú móvil */}
-            <div className="flex items-center gap-3 mt-2">
-              <img
-                src={spainFlag}
-                alt="Español"
-                title="Español"
-                onClick={() => {
-                  if (language !== "es") toggleLanguage();
-                  setMenuOpen(false);
-                }}
-                className={`w-6 h-6 rounded-md border ${
-                  language === "es"
-                    ? "border-blue-500 opacity-100"
-                    : "border-transparent opacity-50 hover:opacity-80"
-                } transition-opacity cursor-pointer`}
+        {/* Sidebar móvil */}
+        <AnimatePresence>
+          {menuOpen && (
+            <>
+              {/* Fondo oscuro */}
+              <motion.div
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setMenuOpen(false)}
               />
-              <img
-                src={usaFlag}
-                alt="English"
-                title="English"
-                onClick={() => {
-                  if (language !== "en") toggleLanguage();
-                  setMenuOpen(false);
-                }}
-                className={`w-6 h-6 rounded-md border ${
-                  language === "en"
-                    ? "border-blue-500 opacity-100"
-                    : "border-transparent opacity-50 hover:opacity-80"
-                } transition-opacity cursor-pointer`}
-              />
-            </div>
-          </div>
-        )}
+
+              {/* Sidebar */}
+              <motion.div
+                className="fixed top-0 right-0 h-full w-72 bg-white shadow-lg z-50 p-6 flex flex-col"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Botón cerrar */}
+                <button
+                  className="self-end mb-6"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <X size={28} />
+                </button>
+
+                {/* Links */}
+                <nav className="flex flex-col gap-6 text-lg">
+                  <Link
+                    to="inicio"
+                    smooth={true}
+                    duration={700}
+                    offset={-80}
+                    spy={true}
+                    activeClass={activeClass}
+                    onClick={() => setMenuOpen(false)}
+                    className="hover:text-blue-500 cursor-pointer"
+                  >
+                    {texts[language].inicio}
+                  </Link>
+                  <Link
+                    to="proyectos"
+                    smooth={true}
+                    duration={700}
+                    offset={-80}
+                    spy={true}
+                    activeClass={activeClass}
+                    onClick={() => setMenuOpen(false)}
+                    className="hover:text-blue-500 cursor-pointer"
+                  >
+                    {texts[language].proyectos}
+                  </Link>
+                  <Link
+                    to="skills"
+                    smooth={true}
+                    duration={700}
+                    offset={-80}
+                    spy={true}
+                    activeClass={activeClass}
+                    onClick={() => setMenuOpen(false)}
+                    className="hover:text-blue-500 cursor-pointer"
+                  >
+                    {texts[language].skills}
+                  </Link>
+                  <Link
+                    to="contacto"
+                    smooth={true}
+                    duration={700}
+                    offset={-80}
+                    spy={true}
+                    activeClass={activeClass}
+                    onClick={() => setMenuOpen(false)}
+                    className="hover:text-blue-500 cursor-pointer"
+                  >
+                    {texts[language].contacto}
+                  </Link>
+                  <a
+                    href="/cv.pdf"
+                    onClick={() => setMenuOpen(false)}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium shadow-md transition-all"
+                  >
+                    {texts[language].descargarCV}
+                  </a>
+
+                  {/* Idiomas */}
+                  <div className="flex items-center gap-3 mt-4">
+                    <img
+                      src={spainFlag}
+                      alt="Español"
+                      title="Español"
+                      onClick={() => {
+                        if (language !== "es") toggleLanguage();
+                        setMenuOpen(false);
+                      }}
+                      className={`w-6 h-6 rounded-md border ${
+                        language === "es"
+                          ? "border-blue-500 opacity-100"
+                          : "border-transparent opacity-50 hover:opacity-80"
+                      } transition-opacity cursor-pointer`}
+                    />
+                    <img
+                      src={usaFlag}
+                      alt="English"
+                      title="English"
+                      onClick={() => {
+                        if (language !== "en") toggleLanguage();
+                        setMenuOpen(false);
+                      }}
+                      className={`w-6 h-6 rounded-md border ${
+                        language === "en"
+                          ? "border-blue-500 opacity-100"
+                          : "border-transparent opacity-50 hover:opacity-80"
+                      } transition-opacity cursor-pointer`}
+                    />
+                  </div>
+                </nav>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </header>
     </div>
   );
