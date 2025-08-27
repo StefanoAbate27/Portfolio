@@ -68,7 +68,7 @@ export default function Header() {
       >
         <nav className="bg-white/90 backdrop-blur-md rounded-full shadow-lg px-4 sm:px-6 py-3 border border-slate-200 flex items-center justify-between w-[90vw] sm:w-auto">
           {/* Logo o nombre */}
-          <div className="text-slate-900 font-bold text-lg">Stefano</div>
+          <div className="text-slate-900 font-bold text-lg">Stefano Abate</div>
 
           {/* Menú escritorio */}
           <ul className="hidden md:flex items-center gap-6">
