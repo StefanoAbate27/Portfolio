@@ -67,6 +67,8 @@ export default function Header() {
         }`}
       >
         <nav className="bg-white/90 backdrop-blur-md rounded-full shadow-lg px-4 sm:px-6 py-3 border border-slate-200 flex items-center justify-between w-[90vw] sm:w-auto">
+          
+          {/*  Menú Desktop */}
           <ul className="hidden md:flex items-center gap-6">
             <li>
               <Link
@@ -128,34 +130,33 @@ export default function Header() {
                 {texts[language].descargarCV}
               </a>
             </li>
+            <li className="flex items-center gap-3">
+              <img
+                src={spainFlag}
+                alt="Español"
+                title="Español"
+                onClick={() => language !== "es" && toggleLanguage()}
+                className={`w-6 h-6 rounded-md border ${
+                  language === "es"
+                    ? "border-blue-500 opacity-100"
+                    : "border-transparent opacity-50 hover:opacity-80"
+                } transition-opacity cursor-pointer`}
+              />
+              <img
+                src={usaFlag}
+                alt="English"
+                title="English"
+                onClick={() => language !== "en" && toggleLanguage()}
+                className={`w-6 h-6 rounded-md border ${
+                  language === "en"
+                    ? "border-blue-500 opacity-100"
+                    : "border-transparent opacity-50 hover:opacity-80"
+                } transition-opacity cursor-pointer`}
+              />
+            </li>
           </ul>
 
-          <div className="flex items-center gap-3 ml-3">
-            <img
-              src={spainFlag}
-              alt="Español"
-              title="Español"
-              onClick={() => language !== "es" && toggleLanguage()}
-              className={`w-6 h-6 rounded-md border ${
-                language === "es"
-                  ? "border-blue-500 opacity-100"
-                  : "border-transparent opacity-50 hover:opacity-80"
-              } transition-opacity cursor-pointer`}
-            />
-            <img
-              src={usaFlag}
-              alt="English"
-              title="English"
-              onClick={() => language !== "en" && toggleLanguage()}
-              className={`w-6 h-6 rounded-md border ${
-                language === "en"
-                  ? "border-blue-500 opacity-100"
-                  : "border-transparent opacity-50 hover:opacity-80"
-              } transition-opacity cursor-pointer`}
-            />
-          </div>
-
-
+          {/* Botón Hamburguesa en móviles */}
           <button
             className="md:hidden ml-3"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -164,7 +165,7 @@ export default function Header() {
           </button>
         </nav>
 
-
+        {/* Menú desplegable en móviles */}
         {menuOpen && (
           <div className="md:hidden mt-3 bg-white/95 backdrop-blur-md shadow-lg rounded-lg border border-slate-200 p-4 flex flex-col items-center gap-4">
             <Link
@@ -215,12 +216,46 @@ export default function Header() {
             >
               {texts[language].contacto}
             </Link>
+
             <a
               href="/cv.pdf"
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-900 hover:bg-blue-600 text-white text-sm font-medium shadow-md transition-all"
+              onClick={() => setMenuOpen(false)}
             >
               {texts[language].descargarCV}
             </a>
+
+            {/* ✅ Idiomas dentro del menú móvil */}
+            <div className="flex items-center gap-3 mt-2">
+              <img
+                src={spainFlag}
+                alt="Español"
+                title="Español"
+                onClick={() => {
+                  if (language !== "es") toggleLanguage();
+                  setMenuOpen(false);
+                }}
+                className={`w-6 h-6 rounded-md border ${
+                  language === "es"
+                    ? "border-blue-500 opacity-100"
+                    : "border-transparent opacity-50 hover:opacity-80"
+                } transition-opacity cursor-pointer`}
+              />
+              <img
+                src={usaFlag}
+                alt="English"
+                title="English"
+                onClick={() => {
+                  if (language !== "en") toggleLanguage();
+                  setMenuOpen(false);
+                }}
+                className={`w-6 h-6 rounded-md border ${
+                  language === "en"
+                    ? "border-blue-500 opacity-100"
+                    : "border-transparent opacity-50 hover:opacity-80"
+                } transition-opacity cursor-pointer`}
+              />
+            </div>
           </div>
         )}
       </header>
